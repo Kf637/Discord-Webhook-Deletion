@@ -27,7 +27,7 @@ If the webhook is successfully deleted, the script will print the following info
 - Application ID
 - Avatar
 - Webhook Type
-- Application ID
+
 
 ## Limitations
 
