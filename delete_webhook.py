@@ -7,6 +7,7 @@ url_pattern = r'^https?://(?:www\.)?(?:discord\.com|discordapp\.com)/\S+$'
 
 while True:
     url = input("Enter the URL of the webhook to delete: ")
+    print('Deleting Webhook')
     if not re.match(url_pattern, url):
         os.system('cls' if os.name == 'nt' else 'clear')
         print("Not a valid URL. Please enter a valid URL.")
