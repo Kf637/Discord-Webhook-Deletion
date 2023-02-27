@@ -1,7 +1,6 @@
 import requests
 import re
 import os
-import time
 
 url_pattern = r'^https?://(?:www\.)?(?:discord\.com|discordapp\.com)/\S+$'
 
