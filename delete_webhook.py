@@ -20,7 +20,29 @@ while True:
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
         print('Failed to retrieve webhook with status code: ', response.status_code)
-        print('Please try again.')
+        if response.status_code == 404:
+            print('Webhook does not exist or could not be found.')
+        elif response.status_code ==  400:
+            print('Bad Request')
+        elif response.status_code == 401:
+            print('Unauthorized')
+        elif response.status_code == 408:
+            print('Request Timeout')
+        elif response.status_code == 429:
+            print('URL Had Too Many Requests')
+        elif response.status_code == 500:
+            print('Internal Server Error')
+        elif response.status_code == 502:
+            print('Bad Gateway')
+        elif response.status_code == 503:
+            print('Service Unavailable')
+        elif response.status_code == 504:
+            print('Gateway Timeout')
+        elif response.status_code == 505:
+            print('HTTP Version Not Supported')
+        elif response.status_code == 508:
+            print('Loop Detected')
+        print('Please try again.\n')
         url = None
         continue
 
