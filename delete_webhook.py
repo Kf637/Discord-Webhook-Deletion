@@ -1,7 +1,7 @@
 import requests
 import re
 import os
-
+from time import sleep
 url_pattern = r'^https?://(?:www\.)?(?:discord\.com|discordapp\.com)/\S+$'
 
 while True:
@@ -12,10 +12,12 @@ while True:
         url = None
         continue
 
-    print('Deleting Webhook')
+    print('Retrieving Webhook Info...')
     response = requests.get(url)
     if response.status_code == requests.codes.ok:
         webhook_info = response.json()
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"\nWebhook Name: {webhook_info['name']}\nToken: {webhook_info['token']}\nGuild ID: {webhook_info['guild_id']}\nChannel ID: {webhook_info['channel_id']}\nWebhook ID: {webhook_info['id']}\nApplication ID: {webhook_info['application_id']}\nAvatar: {webhook_info['avatar']}\nWebhook Type: {webhook_info['type']}\nApplication ID: {webhook_info['application_id']}\n")
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
         print('Failed to retrieve webhook with status code: ', response.status_code)
@@ -45,14 +47,40 @@ while True:
         url = None
         continue
 
-    response = requests.delete(url)
-    if response.status_code == requests.codes.no_content:
+    confirmation = input("Are you sure you want to delete this webhook? (Y/N): ")
+    if confirmation.lower() == "y":
+        response = requests.delete(url)
+        if response.status_code == requests.codes.no_content:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(f'Webhook deleted successfully')
+            url = None
+            for x in range(3):
+                print("")
+        else:
+            print('Failed to delete webhook with status code: ', response.status_code)
+            print('Please try again.')
+            url = None
+        
+    elif confirmation.lower() == "n":
+        print('Action Canceled\nPlase Wait...')
+        sleep(3)
+        url = None
         os.system('cls' if os.name == 'nt' else 'clear')
-        print(f'Webhook deleted successfully\n\nDeleted URL: {url}\nWebhook Name: {webhook_info["name"]}\nToken: {webhook_info["token"]}\nGuild ID: {webhook_info["guild_id"]}\nChannel ID: {webhook_info["channel_id"]}\nWebhook ID: {webhook_info["id"]}\nApplication ID: {webhook_info["application_id"]}\nAvatar: {webhook_info["avatar"]}\nWebhook Type: {webhook_info["type"]}\nApplication ID: {webhook_info["application_id"]}')
-        url = None
-        for x in range(3):
-            print("")
     else:
-        print('Failed to delete webhook with status code: ', response.status_code)
-        print('Please try again.')
-        url = None
+        while confirmation.lower() not in ["y", "n"]:
+            print('Invalid input')
+            confirmation = input("Are you sure you want to delete this webhook? (Y/N): ")
+        if confirmation.lower() == "y":
+            response = requests.delete(url)
+            if response.status_code == requests.codes.no_content:
+                os.system('cls' if os.name == 'nt' else 'clear')
+
+                url = None
+                for x in range(2):
+                    print("")
+            else:
+                print('Failed to delete webhook with status code: ', response.status_code)
+                print('Please try again.')
+                url = None
+        else:
+            url = None

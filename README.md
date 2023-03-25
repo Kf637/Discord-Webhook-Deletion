@@ -1,6 +1,6 @@
 # Discord Webhook Deletion Script
 
-This is a simple Python script that allows you to delete a Discord webhook by providing its URL. It uses the Requests library to send a HTTP DELETE request to the webhook URL and checks the response status code to determine whether the deletion was successful or not. The script also provides information about the deleted webhook, including its name, guild ID, channel ID, and ID.
+This is a simple Python script that allows you to delete any Discord webhook by providing its URL. It uses the Requests library to send a HTTP DELETE request to the webhook URL and checks the response status code to determine whether the deletion was successful or not. The script also provides information about the deleted webhook, including its name, guild ID, channel ID, and ID.
 
 ## Requirements
 
@@ -17,7 +17,7 @@ Note: The script will ask you to enter the webhook URL again if it is not a vali
 
 ## Information Provided
 
-If the webhook is successfully deleted, the script will print the following information about the deleted webhook:
+The script will print the following information about the webhook:
 
 - Webhook Name
 - Token
@@ -32,7 +32,6 @@ If the webhook is successfully deleted, the script will print the following info
 ## Limitations
 
 - The script can only delete Discord webhooks. It will not work with other types of webhooks.
-- The script does not provide any confirmation prompt before deleting the webhook. Make sure you enter the correct URL before running the script.
 
 ## License
 
