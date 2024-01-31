@@ -3,6 +3,19 @@ import re
 import os
 from time import sleep
 url_pattern = r'^https?://(?:www\.)?(?:discord\.com|discordapp\.com)/\S+$'
+status_codes = {
+    404: 'Webhook does not exist or could not be found.',
+    400: 'Bad Request',
+    401: 'Unauthorized',
+    408: 'Request Timeout',
+    429: 'URL Had Too Many Requests',
+    500: 'Internal Server Error',
+    502: 'Bad Gateway',
+    503: 'Service Unavailable',
+    504: 'Gateway Timeout',
+    505: 'HTTP Version Not Supported',
+    508: 'Loop Detected'
+}
 
 while True:
     url = input("Enter the URL of the webhook to delete: ")
@@ -20,35 +33,13 @@ while True:
         print(f"\nWebhook Name: {webhook_info['name']}\nToken: {webhook_info['token']}\nGuild ID: {webhook_info['guild_id']}\nChannel ID: {webhook_info['channel_id']}\nWebhook ID: {webhook_info['id']}\nApplication ID: {webhook_info['application_id']}\nAvatar: {webhook_info['avatar']}\nWebhook Type: {webhook_info['type']}\nApplication ID: {webhook_info['application_id']}\n")
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
-        print('Failed to retrieve webhook with status code: ', response.status_code)
-        if response.status_code == 404:
-            print('Webhook does not exist or could not be found.')
-        elif response.status_code ==  400:
-            print('Bad Request')
-        elif response.status_code == 401:
-            print('Unauthorized')
-        elif response.status_code == 408:
-            print('Request Timeout')
-        elif response.status_code == 429:
-            print('URL Had Too Many Requests')
-        elif response.status_code == 500:
-            print('Internal Server Error')
-        elif response.status_code == 502:
-            print('Bad Gateway')
-        elif response.status_code == 503:
-            print('Service Unavailable')
-        elif response.status_code == 504:
-            print('Gateway Timeout')
-        elif response.status_code == 505:
-            print('HTTP Version Not Supported')
-        elif response.status_code == 508:
-            print('Loop Detected')
-        print('Please try again.\n')
+        message = status_codes.get(response.status_code, 'Unknown status code')
+        print(f'Respond: {response.status_code} {message}\nPlease try again.\n')
         url = None
         continue
 
     confirmation = input("Are you sure you want to delete this webhook? (Y/N): ")
-    if confirmation.lower() == "y":
+    if confirmation.lower() == "y" or confirmation.lower() == "yes":
         response = requests.delete(url)
         if response.status_code == requests.codes.no_content:
             os.system('cls' if os.name == 'nt' else 'clear')
