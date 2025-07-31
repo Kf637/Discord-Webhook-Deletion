@@ -35,7 +35,7 @@ The script will print the following information about the webhook:
 
 ## How does it work?
 
-- This script works by interacting with the Discord API. It uses the provided Webhook ID and Token to authenticate and identify the webhook to be deleted. Once identified, it sends a DELETE request to the Discord API to remove the webhook. Importantly, this script can be used by anyone as it does not require a Discord account token.
+- This script works by interacting with the Discord API. It uses the webhook URL to send a DELETE request to the Discord API to remove the webhook. Importantly, this script can be used by anyone as it does not require a Discord account token.
 
 
 ## License
